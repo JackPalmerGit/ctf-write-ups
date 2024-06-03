@@ -161,6 +161,19 @@ GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
 .comment
 
 ```
+The output of the `strings` command on the binary file `./bbbbloat` shows a mix of standard library function names, symbols related to the `GNU C Library (GLIBC)`, and some seemingly random strings. Here's what we can infer from this output:
+
+- Standard Library Functions: The file is likely compiled with standard C library functions such as `scanf`, `putchar`, `strdup`, `printf`, `strlen`, `stdout`, `fputs`, `free`, etc. These functions are commonly used in C programs.
+
+- GLIBC Versions: The presence of strings like `GLIBC_2.7`, `GLIBC_2.4`, `GLIBC_2.2.5` indicates the minimum GLIBC version required for the binary to run. This suggests that the binary was compiled on a system with GLIBC version 2.7 or later.
+
+- Compiler Information: The string `GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0` indicates that the binary was compiled using the GCC compiler version 9.4.0 on Ubuntu 20.04.1.
+
+- Other Symbols: The other symbols such as `_ITM_deregisterTMCloneTable`, `__gmon_start__`, `_ITM_registerTMCloneTable`, etc., are related to compiler features or runtime behavior. For example, `_ITM_registerTMCloneTable` is related to thread-local storage in GCC.
+
+- Random Strings: The random-looking strings like `u+UH`, `A:4@r%uLH`, `4Ff0f9b0H`, etc., are likely not meaningful and might be artifacts of the compilation process or data in the binary that happens to resemble strings.
+
+However, the presence of the strings `"What's my favorite number?"` and `"Sorry, that's not it!"` within the binary strongly implies the existence of an if statement, which likely orchestrates a conditional question and answer scenario. Leveraging Ghidra's robust analysis capabilities, one can strategically search for these specific strings to pinpoint the associated code segment, thereby illuminating the underlying logic governing this interaction.
 #### 3. Static Analysis
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ghidra
