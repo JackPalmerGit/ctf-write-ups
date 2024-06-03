@@ -178,50 +178,87 @@ You can run `Ghidra` from the command line by simply typing `ghidra`.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ghidra
 ```
-Once Ghidra opens, we are prompted with a blank menu. We can create a new project by clicking `file` in the top left of the window.
+##### Opening Ghidra:
+Upon launching Ghidra, you are presented with a blank interface. To create a new project, click on `File` in the top-left corner of the window.
 
 ![file](https://github.com/gnisrever/re-write-ups/assets/165166334/56dd0063-e7ad-46b7-a8e7-a85e8ee030de)
 
-We then click `New Project` or simply use the command `Ctrl+N`.
+##### Creating a New Project:
+Select `New Project` from the dropdown menu or use the shortcut `Ctrl+N`.
 
 ![new project](https://github.com/gnisrever/re-write-ups/assets/165166334/eb6ac123-c673-4bdd-b117-31735651a22c)
 
-Our project type will be a `Non-Shared Project`. Click `Next`.
+##### Project Type:
+Choose `Non-Shared Project` and click `Next`.
 
 ![non-shared](https://github.com/gnisrever/re-write-ups/assets/165166334/daebafa9-504e-43ca-8e02-01462074c33a)
 
-I will name the project `bbbbloat_ghidra`. Click `Next`.
+##### Naming the Project:
+Name your project, for example, `bbbbloat_ghidra`, and click `Next`.
 
 ![file name](https://github.com/gnisrever/re-write-ups/assets/165166334/3b76a2b0-d5de-42c4-9796-c456f90577fc)
 
-Now that we have created our project, we can click at the top left of the window on `file` and select `Import File` from the dropdown.
+##### Importing a File:
+With the project created, click on `File` in the top-left corner and select `Import File` from the dropdown.
 
 ![import file](https://github.com/gnisrever/re-write-ups/assets/165166334/cd71d3de-5c82-4215-a08e-27f78073e0c4)
 
-
+##### Selecting the File:
+Navigate to the directory containing `bbbbloat`, select the file, and click `Select File to Import`.
 
 ![import file window](https://github.com/gnisrever/re-write-ups/assets/165166334/1cc0119c-b8d9-4360-b4a9-f482166de204)
 
+##### Confirming File Details:
+Confirm that the binary is an `Executable and Linking Format (ELF)` file in `x86:LE:64:default:gcc` language. Click `OK`.
+
 ![import pref](https://github.com/gnisrever/re-write-ups/assets/165166334/a3699d03-449b-48ca-a40c-7c29c6792392)
+
+##### Viewing Import Results:
+Review the import results, which include basic information and checksums (MD5, SHA256). Click `OK` to proceed.
 
 ![import results summary](https://github.com/gnisrever/re-write-ups/assets/165166334/8f9c1e15-1501-4aa0-af43-8529ac304128)
 
+##### Starting Analysis:
+To analyze the executable, click `Yes` when prompted to open the `Analysis Options` window.
+
 ![analyze](https://github.com/gnisrever/re-write-ups/assets/165166334/10d2198f-9b8d-4d5a-a697-3210f2e6520e)
+
+##### Running the Analysis:
+Ensure all necessary analyzers are selected. Click `Analyze` to begin the analysis.
 
 ![analysis option](https://github.com/gnisrever/re-write-ups/assets/165166334/156ae093-3909-41d4-98b2-fbe667f34697)
 
+##### Accessing Defined Strings:
+To locate specific strings, navigate to `Window` in the top-left corner and select `Defined Strings` from the dropdown.
+
 ![defined strings](https://github.com/gnisrever/re-write-ups/assets/165166334/2c90a4c9-123c-48c4-a834-65f314c068a3)
+
+##### Finding a Specific String:
+The `Defined Strings` window displays all strings in the executable. Scroll to find the string `"What's my favorite number?"`.
 
 ![strin in defined strings](https://github.com/gnisrever/re-write-ups/assets/165166334/58fb3b41-d66f-4380-b074-ccaac5f731b4)
 
+##### Navigating to the Reference:
+Double-click the string to navigate to its reference.
+
 ![xref](https://github.com/gnisrever/re-write-ups/assets/165166334/e11def0d-c252-43c9-9ee3-631b0863b79f)
+
+##### Locating the String in Code:
+Double-click the hyperlink reference (HREF) to jump to the specific part of the code where this string is referenced or used.
 
 ![xref 2](https://github.com/gnisrever/re-write-ups/assets/165166334/b15d990d-a26e-464e-9517-d780e3b65043)
 
+##### Reviewing the String Location:
+You have now located the string within the code.
+
 ![001013cb location](https://github.com/gnisrever/re-write-ups/assets/165166334/c00fe0a9-7342-4e21-aaf1-068062e726a2)
+
+##### Using the Decompiler Window:
+Utilize the Decompiler window to gain a better understanding of the function and environment where the string resides.
 
 ![decompile window](https://github.com/gnisrever/re-write-ups/assets/165166334/bdc5fb1f-1155-4368-87e8-60534849b25d)
 
+##### Function Analysis
 ```c
 undefined8 FUN_00101307(void)
 
@@ -263,9 +300,38 @@ undefined8 FUN_00101307(void)
   return 0;
 }
 ```
+Upon reviewing the decompiled code, focus on the if statement:
+```c
+if (local_48 == 0x86187) {
+    local_44 = 0xd2c49;
+    local_40 = (char *)FUN_00101249(0,&local_38);
+    fputs(local_40,stdout);
+    putchar(10);
+    free(local_40);
+}
+else {
+    puts("Sorry, that\'s not it!");
+}
+```
+This if statement compares two values:
+```c
+if (local_48 == 0x86187)
+```
+Here, `local_48` is the user input when prompted with, "What's my favorite number?". The value `0x86187` is a hexadecimal constant. If the input matches this constant, the if statement executes, printing the flag. Otherwise, the else statement executes, displaying "Sorry, that's not it!". Therefore, it is unnecessary to understand the if statement's body in detail, as it is irrelevant to our primary analysis. The critical part of our analysis is recognizing that the if statement checks if the input matches a specific value and responds accordingly. The detailed actions within the if statement are not essential for understanding how to trigger the correct response from the program. This logic can be simplified in pseudocode:
+```c
+if (input == 0x86187) {  // If the user input matches the hexadecimal value
+  print flag           // Print the flag
+} else {
+  print "Sorry, that's not it!"  // Otherwise, indicate the input is incorrect
+}
+```
+To convert `0x86187` to its decimal equivalent, right-click the hexadecimal value in the decompiler.
 
 ![binary if result](https://github.com/gnisrever/re-write-ups/assets/165166334/094adb25-4270-482b-9e66-fecbb6a30903)
 
+The decimal value of `0x86187` is `549255`. 
+
+To verify this, execute the binary from the command line with `549255` as the input:
 
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ./bbbbloat
@@ -276,3 +342,10 @@ What's my favorite number? 549255
 ```plaintext
 picoCTF{cu7_7h3_bl047_695036e3}
 ```
+We have successfully retrieved the flag!
+
+
+
+
+
+
