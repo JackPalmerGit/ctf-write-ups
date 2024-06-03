@@ -1,6 +1,5 @@
-<p align="center">
-  <img src="https://github.com/gnisrever/re-write-ups/assets/165166334/21acdd4c-3c1d-47a1-bb12-32d2dd43dba1" alt="picoCTF_logo_4c" width="200" />
-</p>
+![banner](https://github.com/gnisrever/re-write-ups/assets/165166334/adb45311-d4d0-4fac-8c8c-f7ab3c94e7f2)
+
 
 # Bbbbloat (Write-Up)
 
@@ -175,18 +174,31 @@ The output of the `strings` command on the binary file `./bbbbloat` shows a mix 
 
 However, the presence of the strings `"What's my favorite number?"` and `"Sorry, that's not it!"` within the binary strongly implies the existence of an if statement, which likely orchestrates a conditional question and answer scenario. Leveraging Ghidra's robust analysis capabilities, one can strategically search for these specific strings to pinpoint the associated code segment, thereby illuminating the underlying logic governing this interaction.
 #### 3. Static Analysis
+You can run `Ghidra` from the command line by simply typing `ghidra`.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ghidra
 ```
+Once Ghidra opens, we are prompted with a blank menu. We can create a new project by clicking `file` in the top left of the window.
+
 ![file](https://github.com/gnisrever/re-write-ups/assets/165166334/56dd0063-e7ad-46b7-a8e7-a85e8ee030de)
+
+We then click `New Project` or simply use the command `Ctrl+N`.
 
 ![new project](https://github.com/gnisrever/re-write-ups/assets/165166334/eb6ac123-c673-4bdd-b117-31735651a22c)
 
+Our project type will be a `Non-Shared Project`. Click `Next`.
+
 ![non-shared](https://github.com/gnisrever/re-write-ups/assets/165166334/daebafa9-504e-43ca-8e02-01462074c33a)
+
+I will name the project `bbbbloat_ghidra`. Click `Next`.
 
 ![file name](https://github.com/gnisrever/re-write-ups/assets/165166334/3b76a2b0-d5de-42c4-9796-c456f90577fc)
 
+Now that we have created our project, we can click at the top left of the window on `file` and select `Import File` from the dropdown.
+
 ![import file](https://github.com/gnisrever/re-write-ups/assets/165166334/cd71d3de-5c82-4215-a08e-27f78073e0c4)
+
+
 
 ![import file window](https://github.com/gnisrever/re-write-ups/assets/165166334/1cc0119c-b8d9-4360-b4a9-f482166de204)
 
