@@ -17,7 +17,7 @@ Can you get the flag? Reverse engineer this [binary](https://artifacts.picoctf.n
 ---
 
 ## Approach
-- **Challenge File:** bbbbloat (https://artifacts.picoctf.net/c/46/bbbbloat)
+In this write-up, we will reverse engineer the provided binary to uncover the flag.
 
 ### Tools Used
 *Note: All tools used in this write-up are preinstalled on REMnux (https://remnux.org/).*
@@ -344,7 +344,8 @@ picoCTF{cu7_7h3_bl047_695036e3}
 ```
 We have successfully retrieved the flag!
 
-
+## Conclusion
+Through static analysis using tools like `file`, `strings`, and `Ghidra`, we reverse-engineered the `bbbbloat` binary and identified the specific input value required to reveal the flag. This write-up demonstrates a methodical approach to reverse engineering and the importance of understanding binary structures and logic.
 
 
 
