@@ -28,18 +28,16 @@ Can you get the flag? Reverse engineer this [binary](https://artifacts.picoctf.n
 
 ### Step-by-Step Solution
 
-#### 1. Initial Analysis
-
-[Describe the steps taken for static analysis. Include relevant code snippets, screenshots, or command outputs.]
-
+#### 1. Setup
+To prepare for the challenge, we first create a new directory named `bbbbloat` using the `mkdir` command. This directory will serve as our workspace for analysis.
 ```bash
 remnux@remnux:~/ctf/pico$ mkdir bbbbloat
 ```
-
+Next, we change to the newly created directory using the `cd` command.
 ```bash
 remnux@remnux:~/ctf/pico$ cd bbbbloat
 ```
-
+With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/46/bbbbloat).
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ wget https://artifacts.picoctf.net/c/46/bbbbloat
 ```
@@ -55,6 +53,16 @@ bbbbloat                 100%[==================================>]  14.13K  --.-
 
 2024-06-02 20:56:59 (209 MB/s) - ‘bbbbloat’ saved [14472/14472]
 ```
+Now that we have obtained the binary, we can proceed with our initial analysis.
+#### 2. Initial Analysis
+The `file` command will be our first tool to examine the binary. It not only reveals the file type and architecture but also indicates whether the binary has been `stripped`.
+<details>
+<summary>What does "stripped" mean?</summary>
+Stripping a binary removes debugging and symbol information, making it smaller and harder to analyze. This information, such as variable names and function names, is useful for developers but not necessary for the binary to run. Stripped binaries are more challenging to reverse engineer.
+
+  
+*Note*: Stripping is different from obfuscation. Obfuscation involves deliberately making the code more complex and harder to understand, often by renaming variables and functions to meaningless names or using convoluted logic. Stripping, on the other hand, simply removes helpful metadata without altering the actual code logic.
+</details>
 
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ file bbbbloat
@@ -62,18 +70,26 @@ remnux@remnux:~/ctf/pico/bbbbloat$ file bbbbloat
 ```plaintext
 bbbbloat: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=db1dc86836c3e0e4140eb30914db4af5bce7cb18, for GNU/Linux 3.2.0, stripped
 ```
+The output indicates that our binary file has been stripped. This will complicate locating the main function and debugging the binary due to the absence of symbol and debugging information. However, it is important to note that stripping a file does not affect the strings within the binary. These strings can still be extracted and analyzed, providing valuable insights into the binary's functionality.
+
+To gain a better understanding of the binary, we need to change its mode to make it executable. This can be accomplished using the `chmod` command with the `+x` flag.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ chmod -x bbbbloat
 ```
+This allows us to directly execute the program by adding `./` in front of the executable, specifying that we want to run the file located in our current directory.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ./bbbbloat
 ```
 ```plaintext
 What's my favorite number?
 ```
+The program prompts us with the question "What's my favorite number?". We can input a number, such as `1234`, and the program responds with ->
 ```plaintext
 Sorry, that's not it!
 ```
+This suggests that the program is likely expecting a specific number as an input.
+
+Given that `bbbbloat` has been stripped, we can still attempt to uncover clues by using the `strings` command to analyze all the information provided.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ strings ./bbbbloat
 ```
@@ -145,6 +161,7 @@ GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
 .comment
 
 ```
+#### 3. Static Analysis
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ghidra
 ```
