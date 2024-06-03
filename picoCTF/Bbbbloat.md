@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/gnisrever/re-write-ups/assets/165166334/21acdd4c-3c1d-47a1-bb12-32d2dd43dba1" alt="picoCTF_logo_4c" width="200" />
+</p>
+
 # Bbbbloat (Write-Up)
 
 **Category:** Reverse Engineering \
@@ -144,14 +148,37 @@ GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ ghidra
 ```
+![file](https://github.com/gnisrever/re-write-ups/assets/165166334/56dd0063-e7ad-46b7-a8e7-a85e8ee030de)
 
+![new project](https://github.com/gnisrever/re-write-ups/assets/165166334/eb6ac123-c673-4bdd-b117-31735651a22c)
 
+![non-shared](https://github.com/gnisrever/re-write-ups/assets/165166334/daebafa9-504e-43ca-8e02-01462074c33a)
 
+![file name](https://github.com/gnisrever/re-write-ups/assets/165166334/3b76a2b0-d5de-42c4-9796-c456f90577fc)
 
+![import file](https://github.com/gnisrever/re-write-ups/assets/165166334/cd71d3de-5c82-4215-a08e-27f78073e0c4)
 
+![import file window](https://github.com/gnisrever/re-write-ups/assets/165166334/1cc0119c-b8d9-4360-b4a9-f482166de204)
 
+![import pref](https://github.com/gnisrever/re-write-ups/assets/165166334/a3699d03-449b-48ca-a40c-7c29c6792392)
 
+![import results summary](https://github.com/gnisrever/re-write-ups/assets/165166334/8f9c1e15-1501-4aa0-af43-8529ac304128)
 
+![analyze](https://github.com/gnisrever/re-write-ups/assets/165166334/10d2198f-9b8d-4d5a-a697-3210f2e6520e)
+
+![analysis option](https://github.com/gnisrever/re-write-ups/assets/165166334/156ae093-3909-41d4-98b2-fbe667f34697)
+
+![defined strings](https://github.com/gnisrever/re-write-ups/assets/165166334/2c90a4c9-123c-48c4-a834-65f314c068a3)
+
+![strin in defined strings](https://github.com/gnisrever/re-write-ups/assets/165166334/58fb3b41-d66f-4380-b074-ccaac5f731b4)
+
+![xref](https://github.com/gnisrever/re-write-ups/assets/165166334/e11def0d-c252-43c9-9ee3-631b0863b79f)
+
+![xref 2](https://github.com/gnisrever/re-write-ups/assets/165166334/b15d990d-a26e-464e-9517-d780e3b65043)
+
+![001013cb location](https://github.com/gnisrever/re-write-ups/assets/165166334/c00fe0a9-7342-4e21-aaf1-068062e726a2)
+
+![decompile window](https://github.com/gnisrever/re-write-ups/assets/165166334/bdc5fb1f-1155-4368-87e8-60534849b25d)
 
 ```c
 undefined8 FUN_00101307(void)
@@ -195,6 +222,7 @@ undefined8 FUN_00101307(void)
 }
 ```
 
+![binary if result](https://github.com/gnisrever/re-write-ups/assets/165166334/094adb25-4270-482b-9e66-fecbb6a30903)
 
 
 ```bash
