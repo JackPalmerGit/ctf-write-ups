@@ -24,21 +24,22 @@ In this write-up, we will reverse engineer the provided binary to uncover the fl
 | Tool       | Purpose                                                                                      |
 |------------|----------------------------------------------------------------------------------------------|
 | Ghidra     | Software Reverse Engineering (SRE) framework developed by the National Security Agency (NSA) |
+| UPX        | High-performance executable packer for several executable formats.                           |
 
 ### Step-by-Step Solution
 
 #### 1. Setup
-To prepare for the challenge, we first create a new directory named `bbbbloat` using the `mkdir` command. This directory will serve as our workspace for analysis.
+To prepare for the challenge, we first create a new directory named `unpackme` using the `mkdir` command. This directory will serve as our workspace for analysis.
 ```bash
-remnux@remnux:~/ctf/pico$ mkdir bbbbloat
+remnux@remnux:~/ctf/pico$ mkdir unpackme
 ```
 Next, we change to the newly created directory using the `cd` command.
 ```bash
-remnux@remnux:~/ctf/pico$ cd bbbbloat
+remnux@remnux:~/ctf/pico$ cd unpackme
 ```
 With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/46/bbbbloat).
 ```bash
-remnux@remnux:~/ctf/pico/bbbbloat$ wget https://artifacts.picoctf.net/c/46/bbbbloat
+remnux@remnux:~/ctf/pico/unpackme$ wget https://artifacts.picoctf.net/c/46/bbbbloat
 ```
 ```plaintext
 --2024-06-02 20:56:58--  https://artifacts.picoctf.net/c/46/bbbbloat
