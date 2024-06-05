@@ -37,21 +37,21 @@ Next, we change to the newly created directory using the `cd` command.
 ```bash
 remnux@remnux:~/ctf/pico$ cd unpackme
 ```
-With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/46/bbbbloat).
+With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/204/unpackme-upx).
 ```bash
-remnux@remnux:~/ctf/pico/unpackme$ wget https://artifacts.picoctf.net/c/46/bbbbloat
+remnux@remnux:~/ctf/pico/unpackme$ wget https://artifacts.picoctf.net/c/204/unpackme-upx
 ```
 ```plaintext
---2024-06-02 20:56:58--  https://artifacts.picoctf.net/c/46/bbbbloat
-Resolving artifacts.picoctf.net (artifacts.picoctf.net)... 18.155.216.44, 18.155.216.22, 18.155.216.49, ...
-Connecting to artifacts.picoctf.net (artifacts.picoctf.net)|18.155.216.44|:443... connected.
+--2024-06-04 23:28:41--  https://artifacts.picoctf.net/c/204/unpackme-upx
+Resolving artifacts.picoctf.net (artifacts.picoctf.net)... 18.155.216.17, 18.155.216.49, 18.155.216.22, ...
+Connecting to artifacts.picoctf.net (artifacts.picoctf.net)|18.155.216.17|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 14472 (14K) [application/octet-stream]
-Saving to: ‘bbbbloat’
+Length: 379188 (370K) [application/octet-stream]
+Saving to: ‘unpackme-upx’
 
-bbbbloat                 100%[==================================>]  14.13K  --.-KB/s    in 0s      
+unpackme-upx             100%[===========================================>] 370.30K  --.-KB/s    in 0.06s   
 
-2024-06-02 20:56:59 (209 MB/s) - ‘bbbbloat’ saved [14472/14472]
+2024-06-04 23:28:42 (6.24 MB/s) - ‘unpackme-upx’ saved [379188/379188]
 ```
 Now that we have obtained the binary, we can proceed with our initial analysis.
 #### 2. Initial Analysis
@@ -65,20 +65,20 @@ Stripping a binary removes debugging and symbol information, making it smaller a
 </details>
 
 ```bash
-remnux@remnux:~/ctf/pico/bbbbloat$ file bbbbloat
+remnux@remnux:~/ctf/pico/unpackme$ file unpackme-upx
 ```
 ```plaintext
-bbbbloat: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=db1dc86836c3e0e4140eb30914db4af5bce7cb18, for GNU/Linux 3.2.0, stripped
+unpackme-upx: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, no section header
 ```
-The output indicates that our binary file has been stripped. This will complicate locating the main function and debugging the binary due to the absence of symbol and debugging information. However, it is important to note that stripping a file does not affect the strings within the binary. These strings can still be extracted and analyzed, providing valuable insights into the binary's functionality.
+The output indicates that our binary file has not been stripped.
 
 To gain a better understanding of the binary, we need to change its mode to make it executable. This can be accomplished using the `chmod` command with the `+x` flag.
 ```bash
-remnux@remnux:~/ctf/pico/bbbbloat$ chmod -x bbbbloat
+remnux@remnux:~/ctf/pico/unpackme$ chmod +x unpackme-upx
 ```
 This allows us to directly execute the program by adding `./` in front of the executable, specifying that we want to run the file located in our current directory.
 ```bash
-remnux@remnux:~/ctf/pico/bbbbloat$ ./bbbbloat
+remnux@remnux:~/ctf/pico/unpackme$ ./unpackme-upx
 ```
 ```plaintext
 What's my favorite number?
@@ -89,7 +89,7 @@ Sorry, that's not it!
 ```
 This suggests that the program is likely expecting a specific number as an input.
 
-Given that `bbbbloat` has been stripped, we can still attempt to uncover clues by using the `strings` command to analyze all the information provided.
+Given that `unpackme-upx` has been stripped, we can still attempt to uncover clues by using the `strings` command to analyze all the information provided.
 ```bash
 remnux@remnux:~/ctf/pico/bbbbloat$ strings ./bbbbloat
 ```
