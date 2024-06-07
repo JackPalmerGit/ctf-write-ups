@@ -19,37 +19,31 @@ A program has been provided to you, what happens if you try to run it on the com
 ## Approach
 In this write-up, we will reverse engineer the provided binary to uncover the flag.
 
-### Tools Used
-*Note: All tools used in this write-up are preinstalled on REMnux (https://remnux.org/).*
-| Tool       | Purpose                                                                                      |
-|------------|----------------------------------------------------------------------------------------------|
-| Ghidra     | Software Reverse Engineering (SRE) framework developed by the National Security Agency (NSA) |
-
 ### Step-by-Step Solution
 
 #### 1. Setup
-To prepare for the challenge, we first create a new directory named `bbbbloat` using the `mkdir` command. This directory will serve as our workspace for analysis.
+To prepare for the challenge, we first create a new directory named `file-run1` using the `mkdir` command. This directory will serve as our workspace for analysis.
 ```bash
-remnux@remnux:~/ctf/pico$ mkdir bbbbloat
+remnux@remnux:~/ctf/pico$ mkdir file-run1
 ```
 Next, we change to the newly created directory using the `cd` command.
 ```bash
-remnux@remnux:~/ctf/pico$ cd bbbbloat
+remnux@remnux:~/ctf/pico$ cd file-run1
 ```
-With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/46/bbbbloat).
+With our workspace ready, we download the binary file into this directory using the `wget` command. The binary can be obtained from the provided [link](https://artifacts.picoctf.net/c/219/run).
 ```bash
-remnux@remnux:~/ctf/pico/bbbbloat$ wget https://artifacts.picoctf.net/c/46/bbbbloat
+remnux@remnux:~/ctf/pico/file-run1$ wget https://artifacts.picoctf.net/c/219/run
 ```
 ```plaintext
---2024-06-02 20:56:58--  https://artifacts.picoctf.net/c/46/bbbbloat
-Resolving artifacts.picoctf.net (artifacts.picoctf.net)... 18.155.216.44, 18.155.216.22, 18.155.216.49, ...
-Connecting to artifacts.picoctf.net (artifacts.picoctf.net)|18.155.216.44|:443... connected.
+--2024-06-06 20:58:52--  https://artifacts.picoctf.net/c/219/run
+Resolving artifacts.picoctf.net (artifacts.picoctf.net)... 18.155.216.22, 18.155.216.44, 18.155.216.49, ...
+Connecting to artifacts.picoctf.net (artifacts.picoctf.net)|18.155.216.22|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 14472 (14K) [application/octet-stream]
-Saving to: ‘bbbbloat’
+Length: 16736 (16K) [application/octet-stream]
+Saving to: ‘run’
 
-bbbbloat                 100%[==================================>]  14.13K  --.-KB/s    in 0s      
+run                            100%[===================================================>]  16.34K  --.-KB/s    in 0.002s  
 
-2024-06-02 20:56:59 (209 MB/s) - ‘bbbbloat’ saved [14472/14472]
+2024-06-06 20:58:53 (7.68 MB/s) - ‘run’ saved [16736/16736]
 ```
 Now that we have obtained the binary, we can proceed with our initial analysis.
