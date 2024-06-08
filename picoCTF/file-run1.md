@@ -1,5 +1,3 @@
-![banner](https://github.com/gnisrever/re-write-ups/assets/165166334/adb45311-d4d0-4fac-8c8c-f7ab3c94e7f2)
-
 
 # file-run1 (Write-Up)
 
